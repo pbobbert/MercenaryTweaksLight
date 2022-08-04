@@ -21,7 +21,7 @@ namespace MercenaryTweaksLight
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
 
     //We will be using 2 modules from R2API: ItemAPI to add our item and LanguageAPI to add our language tokens.
-    [R2APISubmoduleDependency(nameof(ItemAPI), nameof(LanguageAPI))]
+    [R2APISubmoduleDependency(nameof(ItemAPI), nameof(LanguageAPI), nameof(ContentAddition), nameof(PrefabAPI))]
 
     //This is the main declaration of our plugin class. BepInEx searches for all classes inheriting from BaseUnityPlugin to initialize on startup.
     //BaseUnityPlugin itself inherits from MonoBehaviour, so you can use this as a reference for what you can declare and use in your plugin class: https://docs.unity3d.com/ScriptReference/MonoBehaviour.html
@@ -48,7 +48,7 @@ namespace MercenaryTweaksLight
             //There are three options for the config file to load.
             jumpsonkill = base.Config.Bind<int>(new ConfigDefinition("01 - Main", "Jumps restored on kill"), 1, new ConfigDescription("On kill, restore the following amount of jumps. Does not increase your maximum.")).Value;
             //slayerult = base.Config.Bind<bool>(new ConfigDefinition("01 - Main", "Slayer Eviscerate"), true, new ConfigDescription("Adds the Slayer tag to your eviscerate skill, which causes addition damage to low targets.")).Value;
-            //slayerslash = base.Config.Bind<bool>(new ConfigDefinition("01 - Main", "Slayer Slicing Winds"), true, new ConfigDescription("Adds the Slayer tag to your sclicing winds skill, which causes addition damage to low targets.")).Value;
+            slayerslash = base.Config.Bind<bool>(new ConfigDefinition("01 - Main", "Slayer Slicing Winds"), true, new ConfigDescription("Adds the Slayer tag to your sclicing winds skill, which causes addition damage to low targets.")).Value;
             slashwidthsize = base.Config.Bind<float>(new ConfigDefinition("01 - Main", "Slicing Winds Size Width axis"), 7, new ConfigDescription("Increases the projectile size of slicing winds, making aiming it more akin to eviserate.")).Value;
             slashdepthsize = base.Config.Bind<float>(new ConfigDefinition("01 - Main", "Slicing Winds Size Depth axis"), 0.28f, new ConfigDescription("Increases the projectile size of slicing winds, making aiming it more akin to eviserate.")).Value;
             slashheightsize = base.Config.Bind<float>(new ConfigDefinition("01 - Main", "Slicing Winds Size Height axis"), 0.48f, new ConfigDescription("Increases the projectile size of slicing winds, making aiming it more akin to eviserate.")).Value;
@@ -58,6 +58,16 @@ namespace MercenaryTweaksLight
             if (jumpsonkill > 0)
             {
                 GlobalEventManager.onCharacterDeathGlobal += restorejumpsonkill;
+            }
+
+            //handle the in game descriptions here so they take effect immediately
+            if (slayerult)
+            {
+            }
+            if (slayerslash)
+            {
+                string desc = "<style=cIsDamage>Slayer</style>. Fire a wind of blades that attack up to <style=cIsDamage>3</style> enemies for <style=cIsDamage>8x100% damage</style>, and leaving them <style=cIsUtility>Exposed</style>.";
+                LanguageAPI.Add("MERC_SPECIAL_ALT1_DESCRIPTION", desc);
             }
 
             On.EntityStates.Merc.Evis.OnEnter += (orig, self) =>

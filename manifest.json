@@ -1,8 +1,8 @@
 ﻿{
 	"name": "MercenaryTweaksLight",
-	"version_number": "1.0.0",
+	"version_number": "0.1.0",
 	"website_url": "",
-	"description": "Refresh one of your jumps on kill with the mercenary, and adds Slayer to the slicing winds and (tbd) eviserate skill.",
+	"description": "Refresh one of your jumps on kill with the mercenary and a few other things.",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.9",
 		"RiskofThunder-HookGenPatcher-1.2.1"
