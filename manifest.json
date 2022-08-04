@@ -1,7 +1,7 @@
 ﻿{
 	"name": "MercenaryTweaksLight",
 	"version_number": "0.1.0",
-	"website_url": "",
+	"website_url": "https://github.com/pbobbert/MercenaryTweaksLight.git",
 	"description": "Refresh one of your jumps on kill with the mercenary and a few other things.",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.9",
